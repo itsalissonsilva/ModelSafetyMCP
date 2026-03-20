@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=69.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "model-safety-mcp"
+version = "0.1.0"
+description = "An MCP server for model artifact safety scanning."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+  { name = "OpenAI Codex" }
+]
+dependencies = [
+]
+
+[project.optional-dependencies]
+scanners = [
+  "picklescan>=0.0.31",
+]
+dev = [
+  "pytest>=8.3.0",
+]
+
+[project.scripts]
+model-safety-mcp = "model_safety_mcp.__main__:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

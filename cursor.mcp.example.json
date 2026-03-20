@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "model-safety": {
+      "type": "stdio",
+      "command": "C:/Users/Lenovo/Documents/ModelSafetyMCP/python312/python.exe",
+      "args": ["C:/Users/Lenovo/Documents/ModelSafetyMCP/run_server.py"]
+    }
+  }
+}
