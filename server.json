@@ -1,0 +1,26 @@
+{
+  "name": "model-safety",
+  "description": "MCP server for scanning machine learning model artifacts for unsafe serialization, malicious patterns, and risky packaging.",
+  "status": "active",
+  "version": "0.1.0",
+  "repository": {
+    "url": "https://github.com/itsalissonsilva/ModelSafetyMCP",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registry_name": "manual",
+      "name": "model-safety",
+      "version": "0.1.0",
+      "runtime": "python",
+      "transport": "stdio",
+      "command": "C:/Users/Lenovo/Documents/ModelSafetyMCP/python312/python.exe",
+      "args": [
+        "C:/Users/Lenovo/Documents/ModelSafetyMCP/run_server.py"
+      ]
+    }
+  ],
+  "capabilities": {
+    "tools": true
+  }
+}

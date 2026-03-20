@@ -715,7 +715,8 @@ def _validate_target_args(*, path: str | None, url: str | None) -> str:
 
 
 def _download_to_temp(url: str, temp_dir: Path) -> Path:
-    parsed = urllib.parse.urlparse(url)
+    normalized_url = _normalize_download_url(url)
+    parsed = urllib.parse.urlparse(normalized_url)
     if parsed.scheme not in {"http", "https"}:
         raise ValueError("URL scanning currently supports only http and https targets.")
 
@@ -725,7 +726,7 @@ def _download_to_temp(url: str, temp_dir: Path) -> Path:
     destination = temp_dir / file_name
 
     request = urllib.request.Request(
-        url,
+        normalized_url,
         headers={"User-Agent": "model-safety-mcp/0.1.0"},
     )
     with urllib.request.urlopen(request, timeout=60) as response, destination.open("wb") as handle:
@@ -734,3 +735,45 @@ def _download_to_temp(url: str, temp_dir: Path) -> Path:
     if destination.stat().st_size == 0:
         raise ValueError("Downloaded artifact is empty.")
     return destination
+
+
+def _normalize_download_url(url: str) -> str:
+    parsed = urllib.parse.urlparse(url)
+    netloc = parsed.netloc.lower()
+
+    if netloc == "huggingface.co":
+        segments = [segment for segment in parsed.path.split("/") if segment]
+        if "blob" not in segments:
+            return url
+
+        blob_index = segments.index("blob")
+        if blob_index < 2 or blob_index == len(segments) - 1:
+            return url
+
+        segments[blob_index] = "resolve"
+        normalized_path = "/" + "/".join(segments)
+        return urllib.parse.urlunparse(parsed._replace(path=normalized_path))
+
+    if netloc == "github.com":
+        segments = [segment for segment in parsed.path.split("/") if segment]
+        if len(segments) < 5 or segments[2] != "blob":
+            return url
+
+        owner, repo = segments[0], segments[1]
+        branch = segments[3]
+        rest = "/".join(segments[4:])
+        normalized_path = f"/{owner}/{repo}/{branch}/{rest}"
+        return urllib.parse.urlunparse(
+            parsed._replace(
+                scheme="https",
+                netloc="raw.githubusercontent.com",
+                path=normalized_path,
+                params="",
+                query="",
+                fragment="",
+            )
+        )
+
+        return url
+    
+    return url

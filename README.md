@@ -1,10 +1,31 @@
 # Model Safety MCP
 
-Malicious or unsafe ML artifacts are a real supply-chain problem, not a theoretical one. There have already been real cases of malicious or suspicious models being discovered in the wild, including models hosted on public platforms and larger batches of unsafe AI/ML artifacts. See [RL identifies malware ML model hosted on Hugging Face](https://www.reversinglabs.com/blog/rl-identifies-malware-ml-model-hosted-on-hugging-face) and [Over 100 Malicious AI/ML Models Found on Hugging Face](https://thehackernews.com/2024/03/over-100-malicious-aiml-models-found-on.html).
+Malicious or unsafe ML artifacts are a real supply-chain problem. There have already been real cases of malicious or suspicious models being discovered in the wild, including models hosted on public platforms and larger batches of unsafe AI/ML artifacts. See [RL identifies malware ML model hosted on Hugging Face](https://www.reversinglabs.com/blog/rl-identifies-malware-ml-model-hosted-on-hugging-face) and [Over 100 Malicious AI/ML Models Found on Hugging Face](https://thehackernews.com/2024/03/over-100-malicious-aiml-models-found-on.html).
 
 One of the biggest reasons this matters is deserialization risk. Many model formats, especially pickle-based and framework-specific formats, can execute code or invoke unsafe logic while being loaded or reconstructed. That means a model file can become an execution vector, not just a passive blob of weights.
 
 `model-safety` is an MCP server for inspecting machine learning model artifacts before you load, ship, or trust them.
+
+## Quick Start
+
+1. Add the MCP server to Cursor or Claude Code using the local Python runtime in this repo.
+2. Start with `artifact_safety_report` on a local file or direct URL.
+3. Review `normalized_findings`, `highest_severity`, and `recommended_actions`.
+4. Use `scan_directory` when you need to triage a whole model drop.
+
+Minimal Cursor config:
+
+```json
+{
+  "mcpServers": {
+    "model-safety": {
+      "type": "stdio",
+      "command": "C:/Users/Lenovo/Documents/ModelSafetyMCP/python312/python.exe",
+      "args": ["C:/Users/Lenovo/Documents/ModelSafetyMCP/run_server.py"]
+    }
+  }
+}
+```
 
 It is designed for practical triage:
 
