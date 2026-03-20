@@ -6,27 +6,6 @@ One of the biggest reasons this matters is deserialization risk. Many model form
 
 `model-safety` is an MCP server for inspecting machine learning model artifacts before you load, ship, or trust them.
 
-## Quick Start
-
-1. Add the MCP server to Cursor or Claude Code using the local Python runtime in this repo.
-2. Start with `artifact_safety_report` on a local file or direct URL.
-3. Review `normalized_findings`, `highest_severity`, and `recommended_actions`.
-4. Use `scan_directory` when you need to triage a whole model drop.
-
-Minimal Cursor config:
-
-```json
-{
-  "mcpServers": {
-    "model-safety": {
-      "type": "stdio",
-      "command": "C:/Users/Lenovo/Documents/ModelSafetyMCP/python312/python.exe",
-      "args": ["C:/Users/Lenovo/Documents/ModelSafetyMCP/run_server.py"]
-    }
-  }
-}
-```
-
 It is designed for practical triage:
 
 - scan a local model file
@@ -51,6 +30,27 @@ The server currently exposes these tools:
   Runs lightweight structural checks for risky extensions, embedded pickle members, and suspicious packaging patterns.
 - `scan_directory`
   Runs `artifact_safety_report` across every file in a directory and aggregates the risky files.
+
+## Quick Start
+
+1. Add the MCP server to Cursor or Claude Code using the local Python runtime in this repo.
+2. Start with `artifact_safety_report` on a local file or direct URL.
+3. Review `normalized_findings`, `highest_severity`, and `recommended_actions`.
+4. Use `scan_directory` when you need to triage a whole model drop.
+
+Minimal Cursor config:
+
+```json
+{
+  "mcpServers": {
+    "model-safety": {
+      "type": "stdio",
+      "command": "C:/Users/Lenovo/Documents/ModelSafetyMCP/python312/python.exe",
+      "args": ["C:/Users/Lenovo/Documents/ModelSafetyMCP/run_server.py"]
+    }
+  }
+}
+```
 
 ## Current Detection Strengths
 
