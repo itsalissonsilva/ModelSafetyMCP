@@ -6,6 +6,8 @@ One of the biggest reasons this matters is deserialization risk. Many model form
 
 `model-safety` is an MCP server for inspecting machine learning model artifacts before you load, ship, or trust them.
 
+[![Model Safety MCP server](https://glama.ai/mcp/servers/itsalissonsilva/ModelSafetyMCP/badges/card.svg)](https://glama.ai/mcp/servers/itsalissonsilva/ModelSafetyMCP)
+
 It is designed for practical triage:
 
 - scan a local model file
