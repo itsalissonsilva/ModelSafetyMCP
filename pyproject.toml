@@ -7,18 +7,19 @@ name = "model-safety-mcp"
 version = "0.1.0"
 description = "An MCP server for model artifact safety scanning."
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.12,<3.13"
 license = { text = "MIT" }
 authors = [
   { name = "OpenAI Codex" }
 ]
 dependencies = [
+  "h5py>=3.16.0",
+  "mcp>=1.26.0",
+  "modelscan>=0.8.8",
+  "picklescan>=1.0.4",
 ]
 
 [project.optional-dependencies]
-scanners = [
-  "picklescan>=0.0.31",
-]
 dev = [
   "pytest>=8.3.0",
 ]
